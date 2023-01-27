@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>WSControl Speedometers</title>
+<style>
+  * {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+   
+
+    body {
+        width:100%;
+        height:100%;
+        background-color:#0A2647;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        position: relative;
+    }
+    
+    .container{
+        width: 100%;
+        padding:10px 30px 0px 30px;
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+     
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        position: relative;
+    }
+
+     
+    .title h1 {
+        color:white;
+        text-align: center;
+        order:2;
+     
+    }
+
+    .control-list {
+        width: 70%;
+        height: 100%;
+        display:flex;
+        flex-wrap: wrap;
+        gap:10px;
+    }
+
+    .pop-up-control{
+        width: 30%;
+        padding:10px;
+        height: 230px;
+        background-color: aliceblue;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid white;
+        box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
+        -webkit-box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
+        transition: .6s;
+        -moz-box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
+    }
+
+    .pop-up-control:hover {
+        scale: 102%;
+    }
+
+    .pop-up-title {
+        font-size: 20px;
+    }
+
+    .car {
+        position: absolute;
+        margin-top: 110px;
+        display:flex;
+        align-items: center;
+        color:white;
+        border-radius: 10px; 
+        cursor: pointer;
+        transition:.6s;
+
+        border: 1px solid white;
+        padding:10px;
+    }
+   
+    .car:hover{
+        background-color: white;
+        color:rgba(9,108,190,0.75);
+    }
+    .car:hover #car-icon {
+        color:red;
+    }
+
+    .status {
+        width:50%;
+        height: 200px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        margin-top:80px;
+        padding:15px;
+        border-radius: 15px;
+    }
+    
+    .status p {
+        font-size: 25px;
+        color:#0A2647;
+    }
+
+    .pop-up-title {
+        color:#0A2647;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        cursor:pointer;
+        align-items: center;
+    }
+
+    .modals {
+        position:fixed;
+        top:200px;
+        border-radius: 20px;
+        z-index: 99;
+        background-color: aliceblue;
+        width: 50%;
+        height: 500px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .tampil {
+        display: block;
+    }
+
+    .modals > .material-symbols-outlined {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .close {
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color:red;
+    }
+
+    .containers {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+    }
+
+    .backdrop {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        opacity: 30%;
+        background-color: rgba(9,108,190,0.75);
+    }
+
+    input {
+        width:100%;
+        padding:10px;
+        margin-top:10px;
+        border:none;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    input:focus {
+        box-shadow: rgba(9,108,190,0.75) 0px 3px 8px;
+        outline: none;
+    }
+
+    button {
+        padding:10px;
+        outline:none;
+        background-color:#0081B4;
+        margin-top:10px;
+        color:white;
+        border:none;
+    }
+</style>
+</head>
+<body>
+  
+   <div class="title">
+       <h1>Speedometer Websocket Control</h1>
+
+       <div class="car">
+        <span id="car-icon" class="material-symbols-outlined">
+            power_settings_new
+        </span>Turn On Car</div>
+   </div>
+ <div class="status">
+  <p>Car Status</p>
+ </div>
+ <div class="container">
+    <div id="temp" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+        <div class="containers">
+            <p>Temp Control</p>
+            <h1>Temp Saat ini :</h1>
+            <input type="number" max="40">
+            <button>Submit</button>
+        </div>
+    </div>
+    <div id="drivecar" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+               <p>Driving Mode</p>
+            </div>
+    </div>
+    <div id="popctrl" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>Pop Control</p>
+                
+            </div>
+    </div>
+    <div id="speed" class="modals hidden">
+        <span id="close"class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>Speed Control</p>
+            </div>
+    </div>
+    <div id="sein" class="modals hidden">
+        <span id="close" class="material-symbols-outlined close">close
+            </span>
+            <div class="containers">
+                <p>Sein Control</p>
+            </div>
+    </div>
+    <div id="ac" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>AC Control</p>
+            </div>
+    </div>
+    <div id="battery" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>Battery Control</p>
+            </div>
+    </div>
+    <div id="driveinfo" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>Drive Info Control</p>
+            </div>
+    </div>
+    <div id="caricon" class="modals hidden">
+        <span class="material-symbols-outlined close">
+            close
+            </span>
+            <div class="containers">
+                <p>Car Icon Control</p>
+            </div>
+    </div>
+    <div class="control-list">
+        <div id="temp" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    device_thermostat
+                </span>
+                <p>Set Suhu</p>
+            </div>
+        </div>
+        <div id="drivecar" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    directions_car
+                </span>
+                <p>Set Driving Mode</p>
+            </div>
+        </div>
+        <div id="popctrl" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                     tab
+                    </span>
+                <p>Pop Up Control</p>
+            </div>
+        </div>
+        <div id="speed" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    speed
+                    </span>
+                <p>Set Speed</p>
+            </div>
+        </div>
+        <div id="sein" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    arrow_right
+                    </span>
+                <p>Set Lampu Sein</p>
+            </div>
+        </div>
+        <div id="ac" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    mode_fan
+                    </span>
+                <p>Set AC</p>
+            </div>
+        </div>
+        <div id="battery" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    battery_horiz_075
+                    </span>
+                <p>Set Battery</p>
+            </div>
+        </div>
+        <div id="driveinfo" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    calendar_month
+                    </span>
+                <p>Set Drive Info</p>
+            </div>
+        </div>    
+        <div id="caricon" class="pop-up-control">
+            <div class="pop-up-title">
+                <span class="material-symbols-outlined">
+                    directions_car
+                </span>
+                <p>Set Car Icon</p>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+ 
+ <div class="mb" style="margin-bottom:950px;"></div>
+ <div class="backdrop hidden">
+
+ </div>
+ 
+ <script>
+     let suhu = document.getElementById("temp")
+     let close = document.getElementsByClassName("close");
+     let popupcontrol = document.getElementsByClassName("pop-up-control");
+     let modals = document.getElementsByClassName("modals");
+     let backdrop = document.getElementsByClassName("backdrop")[0];
+
+    for(let i=0; i<popupcontrol.length; i++){
+        popupcontrol[i].addEventListener("click",function(){
+               let getModals = document.getElementById(`${popupcontrol[i].id}`);
+                 backdrop.classList.remove("hidden")
+                 backdrop.classList.add("tampil")
+                 getModals.classList.remove("hidden")
+                 getModals.classList.add("tampil")
+                  
+        })
+    }
+
+    for(let i=0;i<close.length;i++){
+        let parentElement = close[i].parentElement;
+        close[i].addEventListener("click",function(){
+            for(let i = 0; i<modals.length; i++){
+                if(close[i].parentElement.id == modals[i].id){
+                    backdrop.classList.remove("tampil")
+                    backdrop.classList.add("hidden")
+                    modals[i].classList.remove("tampil");
+                    modals[i].classList.add("hidden");
+                }
+            }   
+        })
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
