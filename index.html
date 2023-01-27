@@ -20,7 +20,7 @@
     body {
         width:100%;
         height:100%;
-        background-color:#0A2647;
+        background-color:#101010;
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -32,6 +32,7 @@
         padding:10px 30px 0px 30px;
         margin-top: 40px;
         display: flex;
+        align-items: center;
         justify-content: center;
     }
 
@@ -46,7 +47,7 @@
 
      
     .title h1 {
-        color:white;
+        color:#73716e;
         text-align: center;
         order:2;
      
@@ -64,16 +65,12 @@
         width: 30%;
         padding:10px;
         height: 230px;
-        background-color: aliceblue;
-        border-radius: 10px;
+        background-color: #282828;
+        border-radius: 5px; 
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid white;
-        box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
-        -webkit-box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
-        transition: .6s;
-        -moz-box-shadow: -1px 1px 12px -1px rgba(9,108,190,0.75);
+   
     }
 
     .pop-up-control:hover {
@@ -81,6 +78,7 @@
     }
 
     .pop-up-title {
+        color:white;
         font-size: 20px;
     }
 
@@ -90,16 +88,16 @@
         display:flex;
         align-items: center;
         color:white;
-        border-radius: 10px; 
+        border-radius: 5px; 
         cursor: pointer;
         transition:.6s;
 
-        border: 1px solid white;
+        border: 1px solid #282828;
         padding:10px;
     }
    
     .car:hover{
-        background-color: white;
+        background-color: #282828;
         color:rgba(9,108,190,0.75);
     }
     .car:hover #car-icon {
@@ -109,36 +107,37 @@
     .status {
         width:50%;
         height: 200px;
-        background-color: white;
+        background-color: #282828;
         display: flex;
         justify-content: center;
         margin-top:80px;
         padding:15px;
-        border-radius: 15px;
+        border-radius: 5px; 
     }
     
     .status p {
         font-size: 25px;
-        color:#0A2647;
+        color:#73716e;
     }
 
     .pop-up-title {
-        color:#0A2647;
+        color:#73716e;
         display: flex;
         text-align: center;
         justify-content: center;
+        font-weight: 600;
         cursor:pointer;
         align-items: center;
     }
 
     .modals {
         position:fixed;
-        top:200px;
-        border-radius: 20px;
+        border-radius: 5px; 
         z-index: 99;
-        background-color: aliceblue;
+        background-color: #282828;
         width: 50%;
         height: 500px;
+        top:calc(100%/6);
     }
 
     .hidden {
@@ -157,6 +156,7 @@
 
     .close {
         cursor: pointer;
+        color:#73716e;
     }
 
     .close:hover {
@@ -167,6 +167,11 @@
         width: 100%;
         height: 100%;
         padding: 20px;
+        color:#73716e;
+    }
+
+    .containers > p {
+      font-weight: 500;
     }
 
     .backdrop {
@@ -174,14 +179,16 @@
         position: absolute;
         height: 100%;
         opacity: 30%;
-        background-color: rgba(9,108,190,0.75);
+        background-color:#73716e;
     }
 
     input {
         width:100%;
+        font-size: large;
         padding:10px;
         margin-top:10px;
         border:none;
+        background-color: #73716e;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
@@ -193,11 +200,45 @@
     button {
         padding:10px;
         outline:none;
-        background-color:#0081B4;
+        background-color:#282828;
         margin-top:10px;
-        color:white;
-        border:none;
+        border-radius: 5px;
+        color:#73716e;
+        border: 1px solid #474747;
+        font-size: large;
+        transition: .3s;
     }
+
+    button:hover {
+        opacity: 90%;
+        background-color: #474747;
+    }
+    button:focus {
+        scale:105%;
+    }
+
+    .driving-menu , .sein-menu {
+        display:flex;
+        gap:10px;
+    }
+    
+    .sein-menu button{
+      display:flex;
+      align-items: center;
+    }
+
+    .btn-popctr , .btn-ac{
+        position: relative;
+    }
+
+    .btn-popctr , .btn-ac button{
+        position: absolute
+    }
+    ::placeholder {
+        color:#101010;
+    }
+
+
 </style>
 </head>
 <body>
@@ -220,7 +261,7 @@
             </span>
         <div class="containers">
             <p>Temp Control</p>
-            <h1>Temp Saat ini :</h1>
+            <h1>Temp Saat ini : 28c</h1>
             <input type="number" max="40">
             <button>Submit</button>
         </div>
@@ -231,6 +272,12 @@
             </span>
             <div class="containers">
                <p>Driving Mode</p>
+               <h1>Driving Mode Saat Ini : Eco</h1>
+                <div class="driving-menu">
+                    <button>Eco</button>
+                    <button>Normal</button>
+                    <button>Sport</button>
+                </div>
             </div>
     </div>
     <div id="popctrl" class="modals hidden">
@@ -239,7 +286,12 @@
             </span>
             <div class="containers">
                 <p>Pop Control</p>
-                
+                <h1>Pop Up Muncul</h1>
+                <div class="btn-popctr">
+                    <button id="hidden" class="btn-pops hidden"> Hilangkan Pop Up</button>
+                    <button id="show" class="btn-pops show">Munculkan Pop Up</button>
+                </div>
+           
             </div>
     </div>
     <div id="speed" class="modals hidden">
@@ -248,6 +300,10 @@
             </span>
             <div class="containers">
                 <p>Speed Control</p>
+                <h1>Speed Saat Ini :</h1>
+                <input type="range" name="speedctr" id="spdctrls">
+                <input type="text" placeholder="Masukan Satuan Pasti" name="speedctrtext" id="spdctrlstxt1">
+                <button>Submit</button>
             </div>
     </div>
     <div id="sein" class="modals hidden">
@@ -255,6 +311,18 @@
             </span>
             <div class="containers">
                 <p>Sein Control</p>
+                <h1>Status:</h1>
+                <div class="sein-menu">
+                    <button><span class="material-symbols-outlined">
+                        arrow_back
+                        </span>Sein Kiri</button>
+                    <button><span class="material-symbols-outlined">
+                        arrow_right_alt
+                        </span>Sein Kanan</button>
+                    <button><span class="material-symbols-outlined">
+                        warning
+                        </span>Hazard</button>
+                </div>
             </div>
     </div>
     <div id="ac" class="modals hidden">
@@ -263,6 +331,11 @@
             </span>
             <div class="containers">
                 <p>AC Control</p>
+                <h1>Status:</h1>
+                <div class="btn-ac">
+                    <button id="hiddenac" class="btn-pops hidden">Nyalakan AC</button>
+                    <button id="showac" class="btn-pops show">Matikan AC</button>
+                </div>
             </div>
     </div>
     <div id="battery" class="modals hidden">
@@ -378,6 +451,12 @@
      let popupcontrol = document.getElementsByClassName("pop-up-control");
      let modals = document.getElementsByClassName("modals");
      let backdrop = document.getElementsByClassName("backdrop")[0];
+     let btnpopshide = document.getElementById("hidden");
+     let btnpopshow = document.getElementById("show");
+     let btnpopshideac = document.getElementById("hiddenac");
+     let btnpopshowac = document.getElementById("showac");
+
+
 
     for(let i=0; i<popupcontrol.length; i++){
         popupcontrol[i].addEventListener("click",function(){
@@ -404,7 +483,70 @@
         })
      }
 
+    btnpopshide.addEventListener("click",function(){
+        if(btnpopshide.classList.contains("hidden")){
+            btnpopshide.classList.remove("hidden");
+            btnpopshide.classList.add("show");
+            btnpopshow.classList.remove("show");
+            btnpopshow.classList.add("hidden");
+        } else {
+            btnpopshide.classList.remove("show");
+            btnpopshide.classList.add("hidden");
+            btnpopshow.classList.remove("hidden");
+            btnpopshow.classList.add("show")
+        }
+    })
 
+    btnpopshow.addEventListener("click",function(){
+        if(btnpopshow.classList.contains("hidden")){
+            btnpopshow.classList.remove("hidden");
+            btnpopshow.classList.add("show");
+            btnpopshide.classList.remove("show");
+            btnpopshide.classList.add("hidden");
+        } else {
+            btnpopshow.classList.remove("show");
+            btnpopshow.classList.add("hidden");
+            btnpopshide.classList.remove("hidden");
+            btnpopshide.classList.add("show")
+        }
+    })
+
+    btnpopshideac.addEventListener("click",function(){
+        if(btnpopshideac.classList.contains("hidden")){
+            btnpopshideac.classList.remove("hidden");
+            btnpopshideac.classList.add("show");
+            btnpopshowac.classList.remove("show");
+            btnpopshowac.classList.add("hidden");
+        } else {
+            btnpopshideac.classList.remove("show");
+            btnpopshideac.classList.add("hidden");
+            btnpopshowac.classList.remove("hidden");
+            btnpopshowac.classList.add("show")
+        }
+    })
+
+    btnpopshowac.addEventListener("click",function(){
+        if(btnpopshowac.classList.contains("hidden")){
+            btnpopshowac.classList.remove("hidden");
+            btnpopshowac.classList.add("show");
+            btnpopshideac.classList.remove("show");
+            btnpopshideac.classList.add("hidden");
+        } else {
+            btnpopshowac.classList.remove("show");
+            btnpopshowac.classList.add("hidden");
+            btnpopshideac.classList.remove("hidden");
+            btnpopshideac.classList.add("show")
+        }
+    })
+
+ 
+
+     
+
+
+
+      
+  
 
 
 
